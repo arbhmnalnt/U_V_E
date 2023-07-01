@@ -1,0 +1,73 @@
+{% extends "play/index.html" %}
+{% block title %}
+    <title>قائمة الحجز</title>
+{% endblock %}
+
+{% block style %}
+.card-success:hover{
+    background-color:#28a745 !important;
+}
+
+.card-danger:hover{
+    background-color:#dc3545!important
+}
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid" style="position: relative;right: 20%;">
+    <div class="row mt-5 mb-3">
+        {% for device in devices %}
+        {%if device.available == True%}
+        <div class="card card-success border-success mb-3 text-center m-2" style="max-width: 18rem;">
+            <div class="card-header h3">جهاز رقم  {{device.number}}</div>
+            <div class="card-body">
+                <img class="card-img-top" src="https://cdn.pixabay.com/photo/2020/04/15/20/48/controller-5048157_640.png" alt="Card image cap">
+                <h5 class="card-title border p-2 m-2 h3 bg-white">
+                    <p class="p-2 text-success">الجهاز متاح</p>
+                    <a class="btn btn-primary d-block w-100 text-white p-2 m-2">حجز الجهاز</a>
+                </h5>
+            </div>
+        </div>
+        {%elif device.available == False%}
+        {% with rent=device.rent_set.last %}
+        <div class="card card-danger border-danger mb-3 text-center m-2" style="max-width: 18rem;">
+            <div class="card-header h3">جهاز رقم  {{device.number}}</div>
+            <div class="card-body text-danger">
+                <img class="card-img-top" src="https://cdn.pixabay.com/photo/2020/04/15/20/48/controller-5048157_640.png" alt="Card image cap">
+                {%if rent.endTime > current_time%}
+                <h5 class="card-title border p-2 m-2 h3 bg-white">
+                    <p class="p-1 text-danger">
+                        {% if rent.endTime > rent.created_at%}
+                            <p class="p-0 text-danger">الحجز ينتهى {{ rent.endTime|date:"M. j, Y, h:i A"}}</p>
+                        {% elif rent.endTime == rent.created_at %}
+                            <p class="text-primary">الحجز مفتوح الوقت</p>
+                            <a class="btn btn-warning d-block w-100 text-white p-2 m-2">تعديل الحجز بوقت</a>
+                        {% endif %}
+                    </p>
+                    <a class="btn btn-warning d-block w-100 text-white p-2 m-2" href="{% url 'play:rent_update' pk=rent.pk %}">تعديل الحجز</a>
+                    <a class="btn btn-info d-block w-100 text-white p-2 m-2">انهاء الحجز</a>
+                    <a class="btn btn-success d-block w-100 text-white p-2 m-2" href="{% url 'play:rent_order_list' pk=rent.pk %}"> طلبات الحجز</a>
+                </h5>
+                {%else%}
+                <p class="p-1">
+                    <p class="text-info">
+                        <span>وقت الانتهاء : {{ rent.endTime|date:"h:i A" }}</span><br>
+                        <span>الوقت حاليا :   {% now "h:i A" %} </span>
+                    </p>
+                    <p class="bg-danger d-block w-100 text-white"> انتهاء موعد الحجز برجاء  إنهاء الحجز</p>
+                    <a href="" class="btn btn-info d-block w-100"> إنهاء الحجز</a>
+                </p>
+                {%endif%}
+                
+            </div>
+        </div>
+        {%endwith%}
+        {%endif%}        
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+
+{% endblock %}

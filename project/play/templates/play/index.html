@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+	<!-- Add additional CSS in static file -->
+  {% load static %}
+  {% block title %}{% endblock %}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+  <style>
+    
+  {% block style %}
+  {% endblock %}
+  </style>
+</head>
+<body>
+	<div class="container-fluid text-right" dir="rtl">
+	    <div class="row">
+	        <div class="col-12">
+	            <div class="float-right p-2 m-2">
+	                <img style="width: 8rem;" class="" src="https://cdn.pixabay.com/photo/2017/01/30/21/01/kontroller-2022084_1280.png" >
+	            </div>
+	            <div class="float-left">
+	                <div class="dropdown">
+                        <button class="btn dropdown-toggle" style="" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-user-circle fa-2x text-danger" aria-hidden="true"></i>
+                        </button>
+                        <div class="dropdown-menu bg-dark text-right text-white" aria-labelledby="dropdownMenuButton">
+                            <h5 class="bg-primary text-white">مرحبا {{request.user.get_short_name}}</h5>
+                            <a class="dropdown-item text-white" href="#">الملف الشخصى</a>
+                            <a class="dropdown-item text-white" href="#">الاشعارات</a>
+                            <a class="dropdown-item text-white" href="/cAccounts/logout">تسجيل الخروج</a>
+                        </div>
+                    </div>
+	            </div>
+	        </div>
+	    </div>
+	<!-- -- -->
+    	<div class="row" style="height:79vh">
+    	    <div class="col-2 p-3 text-white" style="background-color:#30393D; position: fixed; z-index:2">
+
+                <a href="/play/" class="">
+                    <button class="btn btn-secondary w-100 m-2 text-right btn-custom">قائمة الأجهزة </button>
+                </a>
+
+                <a href="/play/create" class="">
+                    <button class="btn btn-secondary w-100 m-2 text-right btn-custom">اضافة حجز جديد</button>
+                </a>
+
+    	    </div>
+    	    <div class="col-10">
+                {% block content %}{% endblock %}
+    	    </div>
+    	</div>
+
+	</div>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>{% block script %}{% endblock %}</script>
+    <script>
+    </script>
+</body>
+</html>

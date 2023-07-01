@@ -1,0 +1,55 @@
+{% extends "play/index.html" %}
+{% block title %}
+    <title>قائمة طلبات الحجز</title>
+{% endblock %}
+
+{% block style %}
+
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid" style="position: relative;right: 20%;">
+    <h3 class="text-center">قائمة بطلبات حجز <span>{{device}}</span></h3>
+    <div class="row">
+        <div class="col-4">
+            <a class="d-block btn btn-primary" href="{% url 'play:rent_order_create' %}">اضافة طلب جديد للحجز</a>
+        </div>
+        <div class="col-4 mr-auto">
+            <a class="d-block btn btn-info" href="{% url 'play:rent_list' %}">قائمة الأجهزة</a>
+        </div>
+    </div>
+    <div class="row mt-5 mb-3">
+        <div class="col-10 m-auto h6">
+            <table class="table table-bordered  text-center table-striped table-hover">
+                <thead class="h5 thead-dark">
+                        <th>الطلب</th>
+                        <th>العدد</th>
+                        <th>السعر</th>
+                        <th>اوامر</th>
+                </thead>
+                <tbody>
+                    {%for order in orders%}
+                    <tr class="">
+                        <td>{{order.name}}</td>
+                        <td>{{order.amount}}</td>
+                        <td>{{order.price}}</td>
+                        <td class="text-white">
+                            <a class="btn btn-info w-50">تعديل الطلب</a>
+                            <a class="btn btn-danger mr-5">حذف الطلب</a>
+                        </td>
+                    </tr>
+                    {%endfor%}
+                </tbody>
+            </table>
+        </div>
+        <div class="col-4 mr-auto h3 p-2 mt-4">
+            <span class="display:inline-block border border-top p-3 m-2">إجمالى المبلغ : {{total_price }}</span>
+        </div>
+
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+
+{% endblock %}
